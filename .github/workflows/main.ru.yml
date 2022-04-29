@@ -1,9 +1,12 @@
-name: SearchX Release
+name: SearchX_RU Release
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
