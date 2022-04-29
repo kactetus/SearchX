@@ -1,4 +1,4 @@
-name: SearchX Release
+name: SearchXRU Release
 
 on:
   pull_request:
