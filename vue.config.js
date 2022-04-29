@@ -87,7 +87,7 @@ module.exports = {
         },
         linux: {
           icon: "icons/icon.png",
-          target: ["AppImage", "deb", "rpm"],
+          //target: ["AppImage", "deb", "rpm"],
           category: "Network"
         }
       }
