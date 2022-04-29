@@ -1,13 +1,10 @@
-name: SearchXRU2 Release
+name: SearchX Release
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
-	
+    branches:
+      - master
+
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -38,4 +35,28 @@ jobs:
           draft: true
           prerelease: false
           bodyFile: .github/workflows/release-note.md
-          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    strategy:
+      matrix:
+        os: [ windows-2019 ]
+        node-version: [ 14.x ]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Load private files
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: src/private/StatisticsApi.js
+          contents: ${{ secrets.STATISTICS_API }}
+          write-mode: overwrite
+      - name: Use Node.js ${{matrix.node-version}} in ${{matrix.os}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Download packages
+        run: npm install
+      - name: Build project
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: npm run electron:build
