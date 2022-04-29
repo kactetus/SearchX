@@ -1,15 +1,9 @@
-name: SearchX_RU Release
+name: SearchX Release
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    branches:
+      - master
 
 jobs:
   release:
@@ -38,7 +32,6 @@ jobs:
           draft: true
           prerelease: false
           bodyFile: .github/workflows/release-note.md
-          token: ${{ secrets.GITHUB_TOKEN }}
   build:
     strategy:
       matrix:
